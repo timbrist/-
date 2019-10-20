@@ -28,19 +28,39 @@ void WriteFile(const char *filename,const char *type,char *str)
     fclose(fp);
 }
 
-void SetStudentInfo(stuNode *node, char *num, char *name,
+void SetStudentInfo(stuNode *node,char num[], char name[],
                     unsigned int elective, unsigned int experiment,
                     unsigned int required)
 {
-    if(node == NULL) return;
-
+    if(node == NULL) return; 
+    strcpy(node->s.num,num);
+    strcpy(node->s.name,name);
+    node->s.elective = elective;
+    //vc++要使用 sprintf_s strcat_s
+    sprintf(node->s.elective_grade,"%d",elective);
+    sprintf(node->s.experiment_grade,"%d",experiment);
+    sprintf(node->s.required_grade,"%d",required);
+    node->s.experiment = experiment;
+    node->s.required = required;
+    strcat(node->stuFile,node->s.num);
+    strcat(node->stuFile,"\t");
+    strcat(node->stuFile,node->s.name);
+    strcat(node->stuFile,"\t");
+    strcat(node->stuFile,node->s.elective_grade);
+    strcat(node->stuFile,"\t");
+    strcat(node->stuFile,node->s.experiment_grade);
+    strcat(node->stuFile,"\t");
+    strcat(node->stuFile,node->s.required_grade);
+    strcat(node->stuFile,"\n");
 
 }
 
 //add info to Student data base;
-void Add(stuNode *node)
-{
-    char info[MAXLINE];
-    
+void Append2File(stuNode *node)
+{     
+    if(node == NULL) return;
+    WriteFile("StudentInfo.txt", "a",node->stuFile);
 }
+
+
 

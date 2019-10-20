@@ -1,37 +1,18 @@
 #include<stdio.h>
-void ReadFile(const char *filename)
-{
-    FILE *fp;
-    char buff[255];
-    if ( (fp = fopen(filename,"r")) == NULL)
-    {
-         printf("open file falied\n");
-         return;
-    }
-    while((fgets(buff,255,fp) ) != NULL)
-    {
-        
-         printf("%s", buff);   
-    } 
-
-    fclose(fp);
-}
-void WriteFile(const char *filename,char *str)
-{
-    FILE *fp;
-    if( (fp = fopen(filename,"w")) ==NULL)
-    {
-        printf("Open file failed\n");
-        return;
-    }
-    fputs(str,fp);
-    fclose(fp);
-}
-
+#include<stdlib.h>
+#include"Model.h"
 int main()
 {
     printf("Hello world\n");
-    WriteFile("test.txt", "hhhhhhhhhhelo world\n");
-    ReadFile("test.txt");    
+    stuNode *node = (stuNode *)malloc(sizeof(stuNode));
+    SetStudentInfo(node, "123", "hello", 76,56,87);
+    printf("this is num: %s\n", node->s.num);
+    printf("this is name: %s\n", node->s.name);
+    printf("this is elective: %s\n", node->s.elective_grade);
+    printf("this is experiment: %s\n", node->s.experiment_grade);
+    printf("this is required: %s\n",node->s.required_grade);
+    printf("this is stuFie: %s\n", node->stuFile);
+    Append2File(node);
+    free(node);
     return 0;
 }
