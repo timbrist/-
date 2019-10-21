@@ -2,11 +2,11 @@
 c语言， 课程设计
 
 #该项目环境： 
-Centos7 GCC-8 
+Centos7 GCC-8  
 
 #如何使用
-gcc main.c Model.c -o stuManage
-./stuMange
+gcc main.c Model.c -o stuManage  
+./stuMange  
 
 #需求功能  
 1. 录入学生信息： 学生学号，姓名，选修课成绩， 实验课成绩，必修课成绩  
@@ -17,10 +17,13 @@ gcc main.c Model.c -o stuManage
 6. 排： 按三门课的总成绩进行高到低排序。  
 7. 统： 统计学生人数；  
 
-#数据结构。 
+#数据结构   
 链式存储； 单链表 
 
 
 
-#设计模式 
-MVC
+#设计模式   
+MVC  
+
+#参考  
+需求分析: << c语言程序开发范例宝典 >> 458页  
