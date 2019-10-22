@@ -1,15 +1,25 @@
 #include<stdio.h>
+#include<stdlib.h>
 #include<stdbool.h>
 
 void Menu();
+void Exit();
+void Input();
+void Delete();
+void Search();
+void Modify();
+void Insert();
+void Order();
+void Sum();
+
 void ShowStudents(char *num, char *name, char *elective, char *experiment,char *required, char *sum);
 
 void PrintInputFeedback(bool isSaved);
-bool Select(unsigned int *select);
-bool SelectStuNum(unsigned int *num);
+void MainWindow();
+
 void ShowStudents(char *num, char *name, char *elective, char *experiment,char *required, char *sum);
-bool InputStuNum(unsigned int *num);
-bool InputStuName(char *name);
-bool InputElective(unsigned int *elective);
-bool InputExperiment(unsigned int *experiment);
-bool InputRequired(unsigned int *required);
+int StuNum();
+void StuName(char *name);
+int Elective();
+int Experiment();
+int Required();
