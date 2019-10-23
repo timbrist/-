@@ -12,6 +12,18 @@ void Menu()
     printf("|                            7. 统计                                |\n"); 
     printf("|-------------------------------------------------------------------|\n");
 }
+void DisplayExit()
+{
+    printf("学生管理系统以退出\n");
+}
+void DisplaySelection()
+{
+    printf("选择: ");
+}
+void isSure()
+{
+    printf("您确定退出吗?<y/n>: ");
+}
 void PrintInputFeedback(bool isSaved)
 {
     if(isSaved)
@@ -19,51 +31,19 @@ void PrintInputFeedback(bool isSaved)
     else
         printf("Failed\n");
 }
-void MainWindow()
-{
-    int select = 1;
-    void (*pFunc[8])() ={Exit, Input,Delete,
-                         Modify, Insert, Order, Sum};
-    while(true)
-    {
-        Menu();
-        printf("选择: ");
-        scanf("%d", &select);
-        //TODO: do menu things;
-        if( select >= 0 && select <=7)
-            pFunc[select]();
-        else
-            break;
-    }
-    printf("学生管理系统以退出\n");
+
+
+//========================pFunc[0]=======================================
+//==========================================================    
+
+int GetNum()
+{ 
+    int num = 0;
+    printf("请输入学生号： ");
+    scanf("%d", &num);
+    return num;
 }
-//==========pFunc[0]==============
-void Exit()
-{
-    char e;
-    printf("您确定退出吗?<y/n>: ");
-    getchar();
-    e = getchar(); 
-    if(e == 'y')
-        exit(0);
-       
-}
-void Input()
-{
-   int num = StuNum();
-   char name[16];
-   StuName(name);
-  int elective = Elective();
-  int experiment = Experiment();
-  int required = Required();
-}
-void Search(){}
-void Delete(){}
-void Modify(){}
-void Insert(){}
-void Order(){}
-void Sum(){}
-    
+
 void ShowStudents(char *num, char *name, char *elective, char *experiment,char *required, char *sum)
 {
     //printf("NUMBER\tNAME\tELECTIVE\tEPERIMENT\tREQUIRED\tSUM");
@@ -77,11 +57,9 @@ int StuNum()
     scanf("%d", &num);
     printf("\n"); 
     return num;
-
 }
 void StuName(char *name)
 {
-
     printf("姓名: ");
     scanf("%s", name);
 }

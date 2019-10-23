@@ -6,8 +6,8 @@ c语言， 课程设计
 Centos7 GCC-8  
 
 #如何使用
-gcc main.c Model.c -o stuManage  
-./stuMange  
+gcc main.c Model.c View.c Controller.c -o student-manage  
+./student-manage 
 
 #需求功能  
 1. 录入学生信息： 学生学号，姓名，选修课成绩， 实验课成绩，必修课成绩  

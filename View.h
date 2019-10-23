@@ -2,20 +2,15 @@
 #include<stdlib.h>
 #include<stdbool.h>
 
-void Menu();
-void Exit();
-void Input();
-void Delete();
-void Search();
-void Modify();
-void Insert();
-void Order();
-void Sum();
+void DisplayExit();
+void DisplaySelection();
+void isSure();
 
+int GetNum();
 void ShowStudents(char *num, char *name, char *elective, char *experiment,char *required, char *sum);
 
 void PrintInputFeedback(bool isSaved);
-void MainWindow();
+void MainWindow_test();
 
 void ShowStudents(char *num, char *name, char *elective, char *experiment,char *required, char *sum);
 int StuNum();

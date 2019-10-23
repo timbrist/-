@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include"Model.h"
-#include"View.h"
+#include"Controller.h"
+
 int main()
 {
     printf("Hello world\n");

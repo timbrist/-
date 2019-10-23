@@ -29,7 +29,7 @@ void WriteFile(const char *filename,const char *type,char *str)
 }
 
 //======================================================
-//
+
 //====================StuNode 成员函数=====================
 void SetStudentInfo(stuNode *node,unsigned int number, char name[],
                     unsigned int elective, unsigned int experiment,
