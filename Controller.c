@@ -1,11 +1,15 @@
 #include "Controller.h"
+#include <stdlib.h>
 
-
+    
 void MainWindow()
 {
     int select = 1;
-    void (*pFunc[8])() ={Exit, Input,Search, Delete,
+    void (*pFunc[8])(studentnode *studentlist) ={Exit, Input,Search, Delete,
                          Modify, Insert, Order, Sum};
+    studentnode *studentlist = (studentnode *)malloc(sizeof(studentnode));
+    studentlist->id = 0;//第0个节点不用
+
     while(true)
     {
         Menu();
@@ -13,24 +17,50 @@ void MainWindow()
         scanf("%d", &select);
         //TODO: do menu things;
         if( select >= 0 && select <=7)
-            pFunc[select]();
+            pFunc[select](studentlist);
         else
             break;
     }
+    studentnode *head = studentlist;
+    FreeList(head);
     DisplayExit();
 
 }
 
 //============从View中得到的数据============
 
-void Input()
+void Input(studentnode *studentlist)
 {
-    int num = StuNum();
-    char name[16];
-    StuName(name);
-    int elective = Elective();
-    int experiment = Experiment();
-    int required = Required();
+    char select = 'n';
+    while(true)
+    {
+        //======调用View获取原始数据
+        int num = StuNum();
+        char name[16];
+        StuName(name);
+        int elective = Elective();
+        int experiment = Experiment();
+        int required = Required();
+        //=============
+       
+        //将原始数据封装为student类型
+        studentnode *node = (studentnode *)malloc(sizeof(studentnode)); 
+        SetNum(node, num);
+        SetName(node, name);
+        SetElective(node, elective);
+        SetExperiment(node, experiment);
+        SetRequired(node, required);
+        Append(studentlist, node);
+        DisplayList(studentlist);
+         //=======调用Model写入文件 
+        isContinue();
+        select = getchar();
+        scanf("%c",&select);
+        if(select != 'y')
+            break;
+    }
+    
+   
 }
 void Exit()
 {
@@ -73,7 +103,53 @@ void Sum()
     printf("\n");
 }
 //============================================
-
+void FreeList(studentnode *node)
+{
+    studentnode *head = node;
+    while(node != NULL)
+    {
+       head = node->next;
+       free(node);
+       node = head;
+    }
+}
+void Append(studentnode* studentlist, studentnode *node)
+{
+    printf("Append start\n");
+    if(node == NULL) return;
+    studentnode *head = studentlist;
+    int count = 1;
+    while(head->next != NULL)
+    {
+        printf("append process\n");
+        head = head->next;
+        ++count;
+    }
+    node->id = count;
+    head->next = node;
+    printf("Append end\n");
+   
+}
+void DisplayList(studentnode *studentlist)
+{
+    studentnode *head = studentlist;
+    DisplayTitle();
+    if(head == NULL) return;
+    while(head != NULL)
+    {
+        if(head->id == 0 ) 
+        {
+            head = head->next;
+            continue;
+        }
+        DisplayStudentTable(head->s.num,
+                head->s.name,
+                head->s.elective,
+                head->s.experiment,
+                head->s.required);
+        head= head->next;
+    }
+}
 
 
 //==================将数据传递给Model===============

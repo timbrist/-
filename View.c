@@ -24,6 +24,27 @@ void isSure()
 {
     printf("您确定退出吗?<y/n>: ");
 }
+void isContinue()
+{
+    printf("您是否需要继续?<y/n>: ");
+}
+void DisplayTitle()
+{
+    printf("---学号\t\t姓名\t\t选修课\t\t实验课\t\t必修课\t\t总成绩---");
+    printf("\n");
+}
+void DisplayStudentTable(int num, char name[],
+                         int elective, int experiment,
+                         int required)
+{
+        printf("---%d\t", num);
+        printf("%s\t\t", name);
+        printf("%d\t\t",elective);
+        printf("%d\t\t", experiment);
+        printf("%d\t\t", required);
+        printf("%d---\n", elective+experiment+required);
+   
+}
 void PrintInputFeedback(bool isSaved)
 {
     if(isSaved)
@@ -40,7 +61,7 @@ int GetNum()
 { 
     int num = 0;
     printf("请输入学生号： ");
-    scanf("%d", &num);
+    scanf("%d", &num); 
     return num;
 }
 
@@ -55,7 +76,7 @@ int StuNum()
     int num = 0;
     printf("学号: ");
     scanf("%d", &num);
-    printf("\n"); 
+
     return num;
 }
 void StuName(char *name)
@@ -68,7 +89,7 @@ int Elective()
     int elective = 0;
     printf("选修课: ");
     scanf("%d", &elective);
-    printf("\n");
+
     return elective;
 }
 int Experiment()
@@ -76,7 +97,7 @@ int Experiment()
     int experiment = 0;
     printf("实验课: ");
     scanf("%d",&experiment);
-    printf("\n");
+
     return experiment;
 }
 int Required()
@@ -84,6 +105,6 @@ int Required()
     int required = 0;
     printf("必修课: ");
     scanf("%d", &required);
-    printf("\n");
+
     return required;
 }

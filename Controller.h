@@ -7,7 +7,7 @@ void MainWindow();
 //============控制视图==============
 void Menu();
 void Exit();
-void Input();
+void Input(studentnode *studentlist);
 void Delete();
 void Search();
 void Modify();
@@ -17,4 +17,7 @@ void Sum();
 
 
 //===========控制模型==================
+void FreeList(studentnode *node);
 
+void Append(studentnode* studentlist, studentnode *node);
+void DisplayList(studentnode *studentlist);

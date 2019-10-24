@@ -1,4 +1,7 @@
 #include"Model.h"
+
+
+
 //======================轮子====================
 void ReadFile(const char *filename)
 {
@@ -31,9 +34,10 @@ void WriteFile(const char *filename,const char *type,char *str)
 //======================================================
 
 //====================StuNode 成员函数=====================
-void SetStudentInfo(stuNode *node,unsigned int number, char name[],
-                    unsigned int elective, unsigned int experiment,
-                    unsigned int required)
+/*
+void SetStudentInfo(studentnode *node,int number, char name[],
+                    int elective, unsigned int experiment,
+                    int required)
 {
     if(node == NULL) return; 
     node->s.number = number;
@@ -56,25 +60,59 @@ void SetStudentInfo(stuNode *node,unsigned int number, char name[],
     strcat(node->stuFile,"\t");
     strcat(node->stuFile,node->s.required_grade);
     strcat(node->stuFile,"\n");
+}*/
+void SetNum(studentnode *node, int number)
+{
+    if(node == NULL) return;
+    node->s.num = number; 
 }
+void SetName(studentnode *node, char name[])
+{
+    if(node == NULL) return;
+    strcpy(node->s.name, name);
+}
+void SetElective(studentnode *node, int elective)
+{
+    if(node == NULL) return;
+    node->s.elective = elective;
+}
+void SetExperiment(studentnode *node, int experiment)
+{
+    if(node == NULL) return ;
+    node->s.experiment = experiment;
+}
+void SetRequired(studentnode *node, int required)
+{
+    if(node == NULL) return;
+    node->s.required = required;
+}
+//==========================
+
+
 
 //add info to Student data base;
-void Append2File(stuNode *node)
+void Append2File(studentnode *studentnode)
 {     
-    if(node == NULL) return;
-    WriteFile("StudentInfo.txt", "a",node->stuFile);
+    if(studentnode == NULL) return;
+   
+    studentfile sf;
+    sprintf(sf.num, "%d", studentnode->s.num);
+    strcpy(sf.name,studentnode->s.name);
+    sprintf(sf.elective, "%d",studentnode->s.elective);   
+    
+    WriteFile("StudentInfo.txt", "a",StudentInfo);
 }
 
 //输入学生学号，返回学生信息
-stuNode *FindStudent(stuNode *node, unsigned int number)
+studentnode *FindStudent(studentnode *node, int number)
 {
-    stuNode *head = node;
-    stuNode *result = NULL;
+    studentnode *head = node;
+    studentnode *result = NULL;
     if(node == NULL) return NULL;
 
     while(head != NULL)
     {
-        if(head->s.number = number)
+        if(head->s.num = number)
         {
             result = head;
             break;
@@ -85,14 +123,14 @@ stuNode *FindStudent(stuNode *node, unsigned int number)
 }
 
 //输入学生学号， 删除该节点
-void DeleteStudent(stuNode *node, unsigned int number)
+void DeleteStudent(studentnode *node, int number)
 {
-    stuNode *head = node;
-    stuNode *pre = node;
+    studentnode *head = node;
+    studentnode *pre = node;
 
     while(head != NULL)
     {
-        if(head->s.number = number)
+        if(head->s.num = number)
         {
             //TODO: delete linklist
             break;
@@ -100,12 +138,12 @@ void DeleteStudent(stuNode *node, unsigned int number)
         head = head->next;
     }
 }
-void ModifyStudent(stuNode *node,unsigned int number, stuNode *newNode)
+void ModifyStudent(studentnode *node,int number, studentnode *newNode)
 {
-    stuNode *head = node;
+    studentnode *head = node;
     while(head != NULL)
     {
-       if(head->s.number == number)
+       if(head->s.num == number)
        {
           //TODO: Modify info with newNode;
           break;
@@ -114,22 +152,22 @@ void ModifyStudent(stuNode *node,unsigned int number, stuNode *newNode)
 }
 
 //输入序号， 在该序号上添加节点
-void InsertStudent(stuNode *node, unsigned int index, stuNode *newNode)
+void InsertStudent(studentnode *node, int index, studentnode *newNode)
 {
-    stuNode *head = node; 
+    studentnode *head = node; 
     for(int i = 0; i < index; ++i)
         head = head->next;
     //TODO:add node to this position;
 }
 
 
-void OrderStudent(stuNode *node)
+void OrderStudent(studentnode *node)
 {
     //TODO:Qsort with link list
 }
 
 //统计学生人数
-unsigned int StudentNumber(stuNode *node)
+int StudentNumber(studentnode *node)
 {
     return node->id;
 }
