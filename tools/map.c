@@ -7,7 +7,7 @@ void InitHash(hashtable *m)
     m->buckets = (bucket *)malloc(HASH_TABLE_SIZE * sizeof(bucket));
     for (int i = 0; i < HASH_TABLE_SIZE; ++i)
     {
-        m->buckets[i].key = -10007;
+        m->buckets[i].key = NULLKEY;
     }
 }
 
@@ -20,7 +20,7 @@ void AddHash(hashtable *m, int k, info v)
     
     int addr = Hash(k);
     //TODO: 开放定址法  
-    while (m->buckets[addr].key != -10007)
+    while (m->buckets[addr].key != NULLKEY)
         addr = (addr + 1) % HASH_TABLE_SIZE;
     
     m->buckets[addr].key = k;
@@ -33,7 +33,7 @@ int FindHash(hashtable *m, int k)
     while (m->buckets[addr].key != k)
     {
         addr = (addr + 1) % HASH_TABLE_SIZE;
-        if (m->buckets[addr].key == -10007 ||
+        if (m->buckets[addr].key == NULLKEY ||
             addr == Hash(k))
         {
             return -1;
@@ -53,44 +53,63 @@ void ModifyHash(hashtable *m, int k, info newinfo)
 {
     m->buckets[FindHash(m, k)].value = newinfo;
 }
+void DeleteHash(hashtable *m, int k)
+{
+    int addr = Hash(k);
+    while(m->buckets[addr].key != k)
+    {
+        addr = (addr +1 ) % HASH_TABLE_SIZE;
+        if(m->buckets[addr].key == NULLKEY ||
+           addr == Hash(k) )
+        {
+            return;
+        }   
+    }
+    m->buckets[addr].key = NULLKEY;
+}
 //=========================================================
 
 //===========================map=======================
 void InitMap(map *This)
 {
-    This->Add = Add;
-    This->Find = Find;
-    This->Free = Free;
-    This->GetValue = GetValue;
-    This->Count = Count;
-    This->Modify = Modify;
+    This->AddMap = AddMap;
+    This->FindMap = FindMap;
+    This->FreeMap = FreeMap;
+    This->GetMapValue = GetMapValue;
+    This->CountMap = CountMap;
+    This->ModifyMap = ModifyMap;
+    This->DeleteMap = DeleteMap;
     This->h.count = 0;
     InitHash(&This->h);
 }
-void Add(struct Map *This, int k, info v)
+void AddMap(struct Map *This, int k, info v)
 {
     ++This->h.count;
     AddHash(&This->h, k, v);
 }
-int Find(struct Map *This, int k)
+int FindMap(struct Map *This, int k)
 {
     return FindHash(&This->h, k);
 }
 
-void Free(struct Map *This)
+void FreeMap(struct Map *This)
 {
     FreeHash(&This->h);
 }
-info GetValue(struct Map *This, int k)
+info GetMapValue(struct Map *This, int k)
 {
     return GetHashValue(&This->h, k);
 }
-int Count(struct Map *This)
+int CountMap(struct Map *This)
 {
     return This->h.count;
 }
-void Modify(struct Map *This,int k, info v)
+void ModifyMap(struct Map *This,int k, info v)
 {
     ModifyHash(&This->h, k, v);
+}
+void DeleteMap(struct Map *This, int k)
+{
+    DeleteHash(&This->h, k);
 }
 

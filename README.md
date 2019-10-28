@@ -1,13 +1,20 @@
 # 学生管理系统
 c语言， 课程设计  
 
+#前言  
+一定要好好使用数据结构！  
+
 
 #该项目环境： 
 Centos7 GCC-8  
 
 #如何使用
-gcc main.c Model.c View.c Controller.c -o student-manage  
-./student-manage 
+cd StudentManagement  
+mkdir build && cd build  
+cmake ..  
+make -j4  
+./Student  
+
 
 #需求功能  
 1. 录入学生信息： 学生学号，姓名，选修课成绩， 实验课成绩，必修课成绩  
@@ -19,7 +26,7 @@ gcc main.c Model.c View.c Controller.c -o student-manage
 7. 统： 统计学生人数；  
 
 #数据结构   
-链式存储； 单链表 
+链式存储；哈希表， 单链表 
 
 
 

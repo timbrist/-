@@ -108,6 +108,22 @@ void PrintList(linknode *list)
         head = head->next;
     }
 }
+void DeleteList(linknode *list, int position)
+{
+    int j = 1;
+    linknode *head = list;
+    linknode *p;
+    while(head->next != NULL && j < position)
+    {
+        head = head->next;
+        ++j;
+    }
+    if(head->next == NULL || j > position)
+        return;
+    p = head->next;
+    head->next = p->next;
+    free(p);
+}
 void FreeList(linknode *list)
 {
     linknode *position = list->next;
@@ -129,6 +145,7 @@ void InitList(list *This)
     This->Sort = Sort;
     This->Print = Print;
     This->Free = Free;
+    This->Delete = Delete;
     This->l.value.id = NULLVALUE;
     This->l.value.total = NULLVALUE;
 }
@@ -157,3 +174,7 @@ void Free(struct List*This)
     FreeList(&This->l);
 }
 
+void Delete(struct List *This, int position)
+{
+    DeleteList(&This->l, position);
+}

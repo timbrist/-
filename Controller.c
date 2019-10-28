@@ -1,15 +1,15 @@
-#include "Controller.h"
-#include <stdlib.h>
+#include"Controller.h"
 
-    
+
 void MainWindow()
 {
     int select = 1;
-    void (*pFunc[8])(studentnode *studentlist) ={Exit, Input,Search, Delete,
-                         Modify, Insert, Order, Sum};
-    studentnode *studentlist = (studentnode *)malloc(sizeof(studentnode));
-    studentlist->id = 0;//第0个节点不用
-
+    void (*pFunc[8])(map *m, list *l) ={ControlExit, ControlInput,ControlSearch, ControlDelete,
+                         ControlModify, ControlInsert, ControlOrder, ControlSum};
+    list l;
+    InitList(&l);
+    map m;
+    InitMap(&m);    
     while(true)
     {
         Menu();
@@ -17,136 +17,71 @@ void MainWindow()
         scanf("%d", &select);
         //TODO: do menu things;
         if( select >= 0 && select <=7)
-            pFunc[select](studentlist);
+            pFunc[select](&m,&l);
         else
             break;
     }
-    studentnode *head = studentlist;
-    FreeList(head);
-    DisplayExit();
-
 }
-
-//============从View中得到的数据============
-
-void Input(studentnode *studentlist)
+void ControlExit()
+{}
+void ControlInput(map *m, list *l)
 {
-    char select = 'n';
-    while(true)
-    {
-        //======调用View获取原始数据
+   char select = 'n';
+   while(true)
+   {  
+       //======调用View获取原始数据=====       
         int num = StuNum();
         char name[16];
         StuName(name);
         int elective = Elective();
         int experiment = Experiment();
         int required = Required();
-        //=============
-       
-        //将原始数据封装为student类型
-        studentnode *node = (studentnode *)malloc(sizeof(studentnode)); 
-        SetNum(node, num);
-        SetName(node, name);
-        SetElective(node, elective);
-        SetExperiment(node, experiment);
-        SetRequired(node, required);
-        Append(studentlist, node);
-        DisplayList(studentlist);
-         //=======调用Model写入文件 
-        Append2File(node); 
+        //======封装为学生数据======
+        student stu;
+        SetStudent(&stu,num,name,elective,experiment,required);
+        //======数据保存到map内存中======
+        m->AddMap(m,num,stu);
+
+        //======学号和总成绩保存到list内存中===
+        Value v;
+        v.id = num;
+        v.total = elective + experiment + required;
+        l->Add(l,v);
+
+        //=========输出学生表====================
+        
+        DisplayStudentTable(num,name,elective,experiment,required);
+        //======询问用户是否继续===========
         isContinue();
         select = getchar();
         scanf("%c",&select);
         if(select != 'y')
             break;
-    }
-    
-   
-}
-void Exit()
-{
-    char e;
-    isSure();
-    getchar();
-    e = getchar(); 
-    if(e == 'y')
-        exit(0);
-       
-}
 
-void Search()
+   } 
+}
+void ControlInsert()
+{}
+void ControlSearch(map *m, list *l)
 {
-    int num = GetNum();
-    //TODO: controller Search(num)
-    //RETURN: char studentInfo[MAXLINE]
+    int num = StuNum();
+    student stu;
+    stu = GetMapValue(m, num);
 
+    //=========================================
+    DisplayStudentTable(stu.num, stu.name, stu.elective,
+            stu.experiment, stu.required);
 }
-void Delete()
+void ControlDelete(map *m, list *l)
 {
-    int num = GetNum();
+    int num = StuNum();
+    //=======delete map=====
+    m->DeleteMap(m, num); 
+    //=======delete list=====
 }
-void Modify()
-{
-    int num = GetNum();
-}
-void Insert()
-{
-    int num = GetNum();
-}
-void Order()
-{
-    int num = GetNum();
-}
-void Sum()
-{
-    int number = 100;
-    printf("总人数为： %d",number);
-    printf("\n");
-}
-//============================================
-void FreeList(studentnode *node)
-{
-    studentnode *head = node;
-    while(node != NULL)
-    {
-       head = node->next;
-       free(node);
-       node = head;
-    }
-}
-void Append(studentnode* studentlist, studentnode *node)
-{
-    if(node == NULL) return;
-    studentnode *head = studentlist;
-    int count = 1;
-    while(head->next != NULL)
-    {
-        head = head->next;
-        ++count;
-    }
-    node->id = count;
-    head->next = node; 
-}
-void DisplayList(studentnode *studentlist)
-{
-    studentnode *head = studentlist;
-    DisplayTitle();
-    if(head == NULL) return;
-    while(head != NULL)
-    {
-        if(head->id == 0 ) 
-        {
-            head = head->next;
-            continue;
-        }
-        DisplayStudentTable(head->s.num,
-                head->s.name,
-                head->s.elective,
-                head->s.experiment,
-                head->s.required);
-        head= head->next;
-    }
-}
-
-
-//==================将数据传递给Model===============
+void ControlModify()
+{}
+void ControlOrder()
+{}
+void ControlSum()
+{}

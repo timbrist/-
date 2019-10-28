@@ -1,3 +1,5 @@
+#pragma once
+#include<string.h>
 #define MAXLINE 128
 typedef struct Student
 {
@@ -18,12 +20,7 @@ typedef struct StudentFile
     char sum[8];
 }studentfile;
 
-
-typedef struct StudentNode
-{
-    int id;
-    student s;
-    struct StudentNode *next;
-}studentnode;
-
 char StudentInfo[MAXLINE];
+
+void SetStudent(student *stu, int n, char na[], int el, int ex, int re);
+

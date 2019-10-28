@@ -33,6 +33,10 @@ void DisplayTitle()
     printf("---学号\t\t姓名\t\t选修课\t\t实验课\t\t必修课\t\t总成绩---");
     printf("\n");
 }
+void AskForNumber()
+{
+    printf("请输入学号: ");
+}
 void DisplayStudentTable(int num, char name[],
                          int elective, int experiment,
                          int required)

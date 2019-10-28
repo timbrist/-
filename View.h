@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<stdbool.h>
 
+void Menu();
 void DisplayExit();
 void DisplaySelection();
 void isSure();

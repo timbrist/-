@@ -6,8 +6,8 @@
 int main()
 {
     printf("Hello world\n");
-    //MainWindow();    
-    LoadFile();
+    MainWindow();    
+    //LoadFile();
 
     return 0;
 }
