@@ -36,6 +36,12 @@ int main()
     printf("------------sort--------------\n"); 
     l.Sort(&l);
     l.Print(&l);
+    printf("--------------------------------/n");
+    Value vv;
+    vv.id = 80;
+    vv.total = 8;
+    l.Delete2(&l, vv);
+    l.Print(&l);
     l.Free(&l);
 
     getchar();

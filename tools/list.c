@@ -108,6 +108,39 @@ void PrintList(linknode *list)
         head = head->next;
     }
 }
+linknode *FindPrevious(linknode *list, Value v)// 复用需要修改 Value v 需要匹配的值
+{
+    linknode * p = list;
+    while(p->next != NULL & p->next->value.id != v.id);
+        p = p->next;
+    return p;
+}
+void DeleteNode(linknode *node, Value v)
+{
+    linknode *p = node->next;
+    linknode *head = node;
+    if(head->value.id = v.id)
+    {
+        linknode *tmp = head;
+        head = head->next;
+        free(tmp);
+    }
+    else
+    {
+        while(p != NULL)
+        {
+            if(p->value.id = v.id)
+            {
+                head->next = p->next;
+                p->next = NULL;
+                free(p);
+            }            
+            head = p;
+            p = p->next;
+        }
+    }
+}
+
 void DeleteList(linknode *list, int position)
 {
     int j = 1;
@@ -146,6 +179,7 @@ void InitList(list *This)
     This->Print = Print;
     This->Free = Free;
     This->Delete = Delete;
+    This->Delete2 = Delete2;
     This->l.value.id = NULLVALUE;
     This->l.value.total = NULLVALUE;
 }
@@ -177,4 +211,8 @@ void Free(struct List*This)
 void Delete(struct List *This, int position)
 {
     DeleteList(&This->l, position);
+}
+void Delete2(struct List *This, Value v)
+{
+    DeleteNode(&This->l, v);
 }

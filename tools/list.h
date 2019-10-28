@@ -23,6 +23,7 @@ int Partition(Value *a, int low, int high, int pivotkey);
 void QSort(Value *a, int low, int high);
 void SortList(linknode *list);
 void PrintList(linknode *list);
+void DeleteNode(linknode *list, Value v);
 void DeleteList(linknode *list, int position);
 void FreeList(linknode *list);
 //===============================================================
@@ -37,6 +38,7 @@ typedef struct List//对外部使用的接口
     void(*Sort)(struct List *This);
     void(*Print)(struct List *This);
     void(*Delete)(struct List *This, int position);
+    void(*Delete2)(struct List *This, Value v);
     void(*Free)(struct List *This);
 }list;
 void InitList(list *This);
@@ -47,3 +49,4 @@ void Sort(struct List*This);
 void Print(struct List*This);
 void Free(struct List*This);
 void Delete(struct List *This, int position);
+void Delete2(struct List *This, Value v);
