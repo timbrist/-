@@ -15,6 +15,7 @@ typedef struct StudentFile
     char elective[8];
     char experiment[8];
     char required[8];
+    char sum[8];
 }studentfile;
 
 

@@ -53,6 +53,7 @@ void Input(studentnode *studentlist)
         Append(studentlist, node);
         DisplayList(studentlist);
          //=======调用Model写入文件 
+        Append2File(node); 
         isContinue();
         select = getchar();
         scanf("%c",&select);
@@ -115,20 +116,16 @@ void FreeList(studentnode *node)
 }
 void Append(studentnode* studentlist, studentnode *node)
 {
-    printf("Append start\n");
     if(node == NULL) return;
     studentnode *head = studentlist;
     int count = 1;
     while(head->next != NULL)
     {
-        printf("append process\n");
         head = head->next;
         ++count;
     }
     node->id = count;
-    head->next = node;
-    printf("Append end\n");
-   
+    head->next = node; 
 }
 void DisplayList(studentnode *studentlist)
 {

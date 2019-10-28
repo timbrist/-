@@ -1,20 +1,17 @@
 #include"Model.h"
 
-
-
 //======================轮子====================
 void ReadFile(const char *filename)
 {
     FILE *fp;
-    char buff[255];
+    char buff[MAXLINE];
     if ( (fp = fopen(filename,"r")) == NULL)
     {
          printf("open file falied\n");
          return;
     }
-    while((fgets(buff,255,fp) ) != NULL)
-    {
-        
+    while((fgets(buff,MAXLINE,fp) ) != NULL)
+    {        
          printf("%s", buff);   
     } 
     fclose(fp);
@@ -30,37 +27,9 @@ void WriteFile(const char *filename,const char *type,char *str)
     fputs(str,fp);
     fclose(fp);
 }
-
 //======================================================
 
 //====================StuNode 成员函数=====================
-/*
-void SetStudentInfo(studentnode *node,int number, char name[],
-                    int elective, unsigned int experiment,
-                    int required)
-{
-    if(node == NULL) return; 
-    node->s.number = number;
-    strcpy(node->s.name,name);
-    node->s.elective = elective;
-    node->s.experiment = experiment;
-    node->s.required = required;
-    //vc++要使用 sprintf_s strcat_s
-    sprintf(node->s.elective_grade,"%d",elective);
-    sprintf(node->s.experiment_grade,"%d",experiment);
-    sprintf(node->s.required_grade,"%d",required);
-    sprintf(node->s.num,"%d",number); 
-    strcat(node->stuFile,node->s.num);
-    strcat(node->stuFile,"\t");
-    strcat(node->stuFile,node->s.name);
-    strcat(node->stuFile,"\t");
-    strcat(node->stuFile,node->s.elective_grade);
-    strcat(node->stuFile,"\t");
-    strcat(node->stuFile,node->s.experiment_grade);
-    strcat(node->stuFile,"\t");
-    strcat(node->stuFile,node->s.required_grade);
-    strcat(node->stuFile,"\n");
-}*/
 void SetNum(studentnode *node, int number)
 {
     if(node == NULL) return;
@@ -89,18 +58,83 @@ void SetRequired(studentnode *node, int required)
 //==========================
 
 
+//void LoadFile(const char *filename, studentnode *node)
+void LoadFile()
+{
+    //1. 将文件内容读入 info[MAXROWS][128]
+    //2. 将info[MAXROWS][128] 从0->MAXROWS赋值给 StudentInfo[128]
+    //3. 将StudentFile[128] 通过 '\t' 进行分割 并把分隔的字符串赋值给StudentFile
+    //4. 将StudentFile中的每一个值通过 atoi 转换为 student格式。
+    //5. 将每一个student 动态申请内存给 studentnode
+    //6. 将每一个studentnode通过链表连接起来；//我tm不想造轮子了。我就只是读个文件啊
+    studentfile sf[3]; 
+    FILE *fp;
+    char buff[MAXLINE];//
+    char *result;
+    char info[3][128];
+    if ( (fp = fopen("StudentInfo.txt","r")) == NULL)
+    {
+         printf("open file falied\n");
+         return;
+    }
+    int j = 0; 
+    while(!feof(fp))
+    {        
+         fgets(buff,MAXLINE,fp);
+         strcpy(info[j], buff);
+         ++j;
+    } 
+    for(int i = 0; i < 3; ++i)
+    { 
+        result = strtok(info[i],";");   
+        strcpy(sf[i].num, result);
+        result = strtok(NULL,";");
+        strcpy(sf[i].name, result);
+        result = strtok(NULL,";");
+        strcpy(sf[i].elective, result);
+        result = strtok(NULL,";");
+        strcpy(sf[i].experiment, result);
+        result = strtok(NULL,";");
+        strcpy(sf[i].required, result);
+        result = strtok(NULL,";");
+    }
+    printf("%s\n", sf[2].name);
+    fclose(fp);
+   
+}
+
 
 //add info to Student data base;
 void Append2File(studentnode *studentnode)
 {     
-    if(studentnode == NULL) return;
-   
+    if(studentnode == NULL) return;   
+    if(studentnode->id == 0) return;
     studentfile sf;
     sprintf(sf.num, "%d", studentnode->s.num);
     strcpy(sf.name,studentnode->s.name);
     sprintf(sf.elective, "%d",studentnode->s.elective);   
-    
+    sprintf(sf.experiment, "%d", studentnode->s.experiment);
+    sprintf(sf.required, "%d", studentnode->s.required);
+    sprintf(sf.sum, "%d", studentnode->s.elective+
+            studentnode->s.experiment+
+            studentnode->s.required);
+
+
+    strcat(StudentInfo,sf.num);
+    strcat(StudentInfo,"\t");
+    strcat(StudentInfo,sf.name);
+    strcat(StudentInfo,"\t");
+    strcat(StudentInfo,sf.elective);
+    strcat(StudentInfo,"\t");
+    strcat(StudentInfo,sf.experiment);
+    strcat(StudentInfo,"\t");
+    strcat(StudentInfo,sf.required);
+    strcat(StudentInfo,"\t");
+    strcat(StudentInfo,sf.sum);
+    strcat(StudentInfo,"\n");
+        
     WriteFile("StudentInfo.txt", "a",StudentInfo);
+    StudentInfo[0] = '\0';
 }
 
 //输入学生学号，返回学生信息

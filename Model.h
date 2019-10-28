@@ -9,6 +9,7 @@ void SetStudentInfo(studentnode *node, int number, char *name,
 void ReadFile(const char *filename);
 void WriteFile(const char  *filename,const char *type,char *str);
 
+void LoadFile();
 
 void Append2File(studentnode *studentnode);
 
