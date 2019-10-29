@@ -4,8 +4,10 @@
 void InitLinkList(linknode *list)
 {
     if (list == NULL) return;
+    //TODO:自定义数据结构初始化--------
     list->value.id = NULLVALUE;
-    list->value.total = NULLVALUE;
+    list->value.total = NULLVALUE;    
+    //-----------------------------
     list->next = NULL;
 }
 void AddNode(linknode *list, Value v)
@@ -103,41 +105,34 @@ void PrintList(linknode *list)
     linknode * head = list;
     while (head != NULL)
     {
-        printf("id:%d\n", head->value.id);
-        printf("to:%d\n", head->value.total);
+        //修改需要显示排序的内容
+        printf("学号:%d\t", head->value.num);
+        printf("姓名:%s\t", head->value.name);
+        printf("选修课:%d\t", head->value.elective);
+        printf("实验课:%d\t", head->value.experiment);
+        printf("必修课:%d\t", head->value.required);
+        printf("总分:%d\n", head->value.total);
+        
         head = head->next;
     }
 }
 linknode *FindPrevious(linknode *list, Value v)// 复用需要修改 Value v 需要匹配的值
 {
     linknode * p = list;
-    while(p->next != NULL & p->next->value.id != v.id);
+    //while(p->next != NULL && p->next->value.id != v.id) //多加一个分号 我晕了:w
+    while(p->next != NULL && p->next->value.num != v.num) //根据需要操作的key修改
         p = p->next;
     return p;
 }
 void DeleteNode(linknode *node, Value v)
 {
-    linknode *p = node->next;
-    linknode *head = node;
-    if(head->value.id = v.id)
+    linknode *p = FindPrevious(node, v);
+    linknode *tmp;
+    if(p->next != NULL)
     {
-        linknode *tmp = head;
-        head = head->next;
+        tmp = p->next;
+        p->next = tmp->next;
         free(tmp);
-    }
-    else
-    {
-        while(p != NULL)
-        {
-            if(p->value.id = v.id)
-            {
-                head->next = p->next;
-                p->next = NULL;
-                free(p);
-            }            
-            head = p;
-            p = p->next;
-        }
     }
 }
 
@@ -157,6 +152,65 @@ void DeleteList(linknode *list, int position)
     head->next = p->next;
     free(p);
 }
+void DeleteListValue(linknode *list, int onlykey)
+{
+    linknode * p = list;  
+    while(p->next != NULL && p->next->value.num != onlykey) //根据需要操作的key修改
+        p = p->next;
+    
+    linknode *tmp;
+    if(p->next != NULL)
+    {
+        tmp = p->next;
+        p->next = tmp->next;
+        free(tmp);
+    }
+}
+void ModifyList(linknode *list, Value oldValue, Value newValue)
+{
+    linknode * head = list;
+    while(head != NULL)
+    {
+       //if(head->value.id == oldValue.id)
+       if(head->value.num == oldValue.num)//根据需要操作的key来修改
+       {
+           head->value = newValue;
+       }
+       head = head->next;
+    }
+}
+linknode  *FindNode(linknode *list, Value v)
+{
+    linknode *head = list;
+    //while(head != NULL && head->value.id != v.id)
+    while(head != NULL && head->value.num != v.num)//根据需要操作的key来修改
+        head = head->next;
+    return head;      
+}
+void ModifyListValue(linknode *list, int onlykey, Value newv)
+{
+
+    linknode * head = list;
+    while(head != NULL)
+    {
+       //if(head->value.id == oldValue.id)
+       if(head->value.num == onlykey)//根据需要操作的key来修改
+       {
+           head->value = newv;
+       }
+       head = head->next;
+    }
+}
+
+Value GetListValue(linknode *list, int onlykey)
+{
+    linknode *head = list;
+    //while(head != NULL && head->value.id != v.id)
+    while(head != NULL && head->value.num != onlykey)//根据需要操作的key来修改
+        head = head->next;
+    return head->value;
+}
+
 void FreeList(linknode *list)
 {
     linknode *position = list->next;
@@ -180,6 +234,9 @@ void InitList(list *This)
     This->Free = Free;
     This->Delete = Delete;
     This->Delete2 = Delete2;
+    This->Modify = Modify;
+    This->Modify2 = Modify2;
+    This->GetValue = GetValue;
     This->l.value.id = NULLVALUE;
     This->l.value.total = NULLVALUE;
 }
@@ -216,3 +273,16 @@ void Delete2(struct List *This, Value v)
 {
     DeleteNode(&This->l, v);
 }
+void Modify2(struct List *This, Value oldValue, Value newValue)
+{
+    ModifyList(&This->l,oldValue, newValue);
+}
+Value GetValue(struct List *This, int onlykey)
+{
+    return GetListValue(&This->l, onlykey);
+}
+void Modify(struct List *This, int onlykey ,Value newv)
+{
+    ModifyListValue(&This->l,onlykey, newv);
+}
+

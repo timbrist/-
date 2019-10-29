@@ -9,6 +9,7 @@ void isSure();
 
 void isContinue();
 void DisplayTitle();
+int GetPosition();
 int GetNum();
 void ShowStudents(char *num, char *name, char *elective, char *experiment,char *required, char *sum);
 void DisplayStudentTable(int num, char name[],

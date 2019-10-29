@@ -3,11 +3,13 @@
 #define MAXLINE 128
 typedef struct Student
 {
-    int num;
-    char name[16];
-    int elective;
-    int experiment;
-    int required;
+    int id;//唯一值&&递增
+    int num;//序号
+    char name[16];//姓名
+    int elective;//选修课
+    int experiment;//实验课
+    int required;//必修课
+    int total;//总成绩， 需要排序的值
 }student;
 
 typedef struct StudentFile

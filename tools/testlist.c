@@ -33,14 +33,20 @@ int main()
         l.Add(&l, v[i]);
     }
     l.Print(&l);
-    printf("------------sort--------------\n"); 
-    l.Sort(&l);
-    l.Print(&l);
-    printf("--------------------------------/n");
+    //printf("------------sort--------------\n"); 
+    //l.Sort(&l);
+    //l.Print(&l);
+    printf("--------------------------------\n");
     Value vv;
     vv.id = 80;
     vv.total = 8;
     l.Delete2(&l, vv);
+    l.Print(&l);
+    printf("-----------Modify----------------\n");
+    Value newvalue;
+    newvalue.id = 30;
+    newvalue.total = 30000;
+    l.Modify(&l,v[5],newvalue);
     l.Print(&l);
     l.Free(&l);
 

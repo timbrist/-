@@ -37,6 +37,10 @@ void AskForNumber()
 {
     printf("请输入学号: ");
 }
+void AskForPosition()
+{
+    printf("请输入需要插入的位置: ");
+}
 void DisplayStudentTable(int num, char name[],
                          int elective, int experiment,
                          int required)
@@ -60,6 +64,13 @@ void PrintInputFeedback(bool isSaved)
 
 //========================pFunc[0]=======================================
 //==========================================================    
+int GetPosition()
+{
+    int p = 0;
+    printf("请输入需要插入的位置: ");
+    scanf("%d", &p);
+    return p;
+}
 
 int GetNum()
 { 
