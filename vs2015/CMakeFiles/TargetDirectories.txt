@@ -1,0 +1,3 @@
+C:/Users/aweso/Desktop/StudentMangement/vs2015/CMakeFiles/Student.dir
+C:/Users/aweso/Desktop/StudentMangement/vs2015/CMakeFiles/ALL_BUILD.dir
+C:/Users/aweso/Desktop/StudentMangement/vs2015/CMakeFiles/ZERO_CHECK.dir
