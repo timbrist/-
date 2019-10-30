@@ -1,28 +1,12 @@
-#include<string.h>
 #include<stdio.h>
+#include<stdlib.h>
 #include"Student.h"
+#include<string.h>
 
+#define MAXROWS 1024
+#define FILENAME "../StudentInfo.txt"
 
-void SetStudentInfo(studentnode *node, int number, char *name,
-                    int elective, int experiment,
-                    int required);
-void ReadFile(const char *filename);
-void WriteFile(const char  *filename,const char *type,char *str);
-
-void LoadFile();
-
-void Append2File(studentnode *studentnode);
-
-void SetNum(studentnode *node, int number);
-void SetName(studentnode *node, char name[]);
-void SetElective(studentnode *node, int elective);
-void SetExperiment(studentnode *node, int experiment);
-void SetRequired(studentnode *node, int required);
-
-int StudentNumber(studentnode *node);
-void OrderStudent(studentnode *node);
-void InsertStudent(studentnode *node, int index, studentnode *newNode);
-void ModifyStudent(studentnode *node,int number, studentnode *newNode);
-void DeleteStudent(studentnode *node, int number);
-studentnode *FindStudent(studentnode *node, int number);
-
+int GetFileLines(const char *filename);
+int isFileEmpty(const char *filename);
+void GetStudentLine(student *stu, int filelines);
+void WriteFile(const char *filename, char *str);

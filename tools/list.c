@@ -234,6 +234,7 @@ void InitList(list *This)
     This->Free = Free;
     This->Delete = Delete;
     This->Delete2 = Delete2;
+    This->DeleteValue = DeleteValue;
     This->Modify = Modify;
     This->Modify2 = Modify2;
     This->GetValue = GetValue;
@@ -272,6 +273,10 @@ void Delete(struct List *This, int position)
 void Delete2(struct List *This, Value v)
 {
     DeleteNode(&This->l, v);
+}
+void DeleteValue(struct List *This, int onlykey)
+{
+    DeleteListValue(&This->l, onlykey);
 }
 void Modify2(struct List *This, Value oldValue, Value newValue)
 {
