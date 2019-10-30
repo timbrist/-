@@ -8,6 +8,13 @@ c语言,课程设计,数据结构,管理系统,crud, 复制即可使用
 Centos7 GCC-8  
 
 #如何使用
+Windows:  
+vs2015版本及以上  
+进入vs2015目录, 点击Student.vcxproj  
+在vs2015中直接运行  
+若出现无法打开.exe 在vs中添加当前目录debug/Student.exe  
+或直接在当前目录debug/打开Student.exe  
+linux:  
 cd StudentManagement  
 mkdir build && cd build  
 cmake ..  
