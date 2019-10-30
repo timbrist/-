@@ -31,9 +31,9 @@ make -j4
 
 #效果图  
 功能已全部完成, 效果图如下  
-![界面][url1]  
-![查找][url2]
-![排序][url3]
+![界面](https://github.com/timbrist/StudentMangement/blob/master/pic/interface.png)  
+![查找](https://github.com/timbrist/StudentMangement/blob/master/pic/find.png)  
+![排序](https://github.com/timbrist/StudentMangement/blob/master/pic/order.png)    
 #设计模式   
 MVC  
 
